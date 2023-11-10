@@ -6,6 +6,7 @@ version="$name_command 1.0"
 help_message="Try '$name_command -h|--help' for more information"
 
 color=""
+bg_color=""
 string=""
 option_n=false
 option_b=false
@@ -66,50 +67,51 @@ function handle_print() {
     local fn_option_n=$3
     local fn_option_u=$4
     local fn_option_i=$5
+    local fn_bg_color=$6
 
     if $fn_option_b && ! $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # b is true
-            echo -e "${bold}${fn_color}${string}${reset_all}"
+            echo -e "${bold}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif ! $fn_option_b && ! $fn_option_i && $fn_option_n && ! $fn_option_u; then # n is true
-            echo -e -n "${fn_color}${string}${reset_all}"
+            echo -e -n "${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif ! $fn_option_b && $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # i is true
-            echo -e "${fn_color}${inverse}${string}${reset_all}"
+            echo -e "${fn_color}${inverse}${fn_bg_color}${string}${reset_all}"
 
         elif ! $fn_option_b && ! $fn_option_i && ! $fn_option_n && $fn_option_u; then # u is true
-            echo -e "${fn_color}${underline}${string}${reset_all}"
+            echo -e "${fn_color}${underline}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && ! $fn_option_i && ! $fn_option_n && $fn_option_u; then # b, u are true
-            echo -e "${bold}${fn_color}${underline}${string}${reset_all}"
+            echo -e "${bold}${fn_color}${underline}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # b, i are true
-            echo -e "${bold}${inverse}${fn_color}${string}${reset_all}"
+            echo -e "${bold}${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && ! $fn_option_i && $fn_option_n && ! $fn_option_u; then # b, n are true
-            echo -e -n "${bold}${fn_color}${string}${reset_all}"
+            echo -e -n "${bold}${fn_color}${fn_bg_color}${string}${reset_all}"
                 
         elif ! $fn_option_b && ! $fn_option_i && $fn_option_n && $fn_option_u; then # n, u are true
-            echo -e -n "${underline}${fn_color}${string}${reset_all}"
+            echo -e -n "${underline}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif ! $fn_option_b && $fn_option_i && $fn_option_n && ! $fn_option_u; then # n, i are true
-            echo -e -n "${inverse}${fn_color}${string}${reset_all}"
+            echo -e -n "${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
         
         elif ! $fn_option_b && $fn_option_i && ! $fn_option_n && $fn_option_u; then # i, u are true
-            echo -e "${underline}${inverse}${fn_color}${string}${reset_all}"
+            echo -e "${underline}${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && ! $fn_option_i && $fn_option_n && $fn_option_u; then # b, n, u are true
-            echo -e -n "${bold}${underline}${fn_color}${string}${reset_all}"
+            echo -e -n "${bold}${underline}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif ! $fn_option_b && $fn_option_i && $fn_option_n && $fn_option_u; then # n, u, i are true
-            echo -e -n "${underline}${inverse}${fn_color}${string}${reset_all}"
+            echo -e -n "${underline}${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && $fn_option_i && $fn_option_n && ! $fn_option_u; then # b, n, i are true
-            echo -e -n "${bold}${inverse}${fn_color}${string}${reset_all}"
+            echo -e -n "${bold}${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
 
         elif $fn_option_b && $fn_option_i && ! $fn_option_n && $fn_option_u; then # b, u, i are true
-            echo -e "${bold}${underline}${inverse}${fn_color}${string}${reset_all}"
+            echo -e "${bold}${underline}${inverse}${fn_color}${fn_bg_color}${string}${reset_all}"
         else
-            echo -e "${fn_color}${string}${reset_all}"
+            echo -e "${fn_color}${fn_bg_color}${string}${reset_all}"
         fi
 }
 
@@ -198,6 +200,72 @@ if [[ ! -z $invalid_option ]]; then
 fi
 
 
+function handle_print_bg() {
+    case $color in 
+        red)
+            handle_print $red $option_b $option_n $option_u $option_i $1
+            ;;
+        blue) 
+            handle_print $blue $option_b $option_n $option_u $option_i $1
+            ;;
+        green) 
+            handle_print $green $option_b $option_n $option_u $option_i $1
+            ;;
+        cyan) 
+            handle_print $cyan $option_b $option_n $option_u $option_i $1
+            ;;
+        magenta) 
+            handle_print $magenta $option_b $option_n $option_u $option_i $1
+            ;;
+        yellow) 
+            handle_print $yellow $option_b $option_n $option_u $option_i $1
+            ;;
+        black) 
+            handle_print $black $option_b $option_n $option_u $option_i $1
+            ;;
+        white) 
+            handle_print $white $option_b $option_n $option_u $option_i $1
+            ;;
+        *)
+            echo "Unavailable color"
+            echo $help_message
+            ;;
+    esac
+}
+
+if [ ! -z "$bg_color" ]; then
+    case $bg_color in
+        red)
+           handle_print_bg $bg_red 
+        ;;
+        blue)
+            handle_print_bg $bg_blue
+        ;;
+        green)
+            handle_print_bg $bg_green
+        ;;
+        yellow)
+            handle_print_bg $bg_yellow
+        ;;
+        cyan)
+            handle_print_bg $bg_cyan
+        ;;
+        magenta)
+            handle_print_bg $bg_magenta
+        ;;
+        black)
+            handle_print_bg $black
+        ;;
+        white)
+            handle_print_bg $bg_white
+        ;;
+        *)
+            echo "Unavailable color"
+            echo $help_message
+        ;;
+    esac
+else
+
 case $color in 
     red)
         handle_print $red $option_b $option_n $option_u $option_i
@@ -228,3 +296,6 @@ case $color in
         echo $help_message
         ;;
 esac
+
+
+fi
