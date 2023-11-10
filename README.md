@@ -2,8 +2,13 @@
 
 ## Install
 
+```bash
+sudo curl -o /usr/bin/rainbow-echo https://raw.githubusercontent.com/abdosbaai/rainbow-echo/main/rainbow-echo && sudo chmod +x /usr/bin/rainbow-echo
 ```
-sudo curl -o 
+### (man page)
+
+```bash
+sudo curl -o /usr/share/man/man1/rainbow-echo.1 https://raw.githubusercontent.com/abdosbaai/rainbow-echo/main/rainbow-echo.1
 ```
 
 ## Description
