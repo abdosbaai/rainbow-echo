@@ -1,0 +1,230 @@
+#!/bin/bash
+
+# Default values
+name_command="rainbow-echo"
+version="$name_command 1.0"
+help_message="Try '$name_command -h|--help' for more information"
+
+color=""
+string=""
+option_n=false
+option_b=false
+option_u=false
+option_i=false
+
+# colors
+black='\e[30m'
+red='\e[31m'
+green='\e[32m'
+yellow='\e[33m'
+blue='\e[34m'
+magenta='\e[35m'
+cyan='\e[36m'
+white='\e[37m'
+
+# background colors
+bg_black='\e[40m'
+bg_red='\e[41m'
+bg_green='\e[42m'
+bg_yellow='\e[43m'
+bg_blue='\e[44m'
+bg_magenta='\e[45m'
+bg_cyan='\e[46m'
+bg_white='\e[47m'
+
+
+# Text styles
+bold='\e[1m'
+underline='\e[4m'
+inverse='\e[7m'
+
+reset_all='\e[0m'
+
+# Function to display help message
+function display_help() {
+    echo -e "${bold}${blue}Usage:${reset_all} $name_command [Options] -c <color-name> String"
+    echo "       $name_command [Options] --color=<color> String"
+    echo "       $name_command [Options] --color=<color> --bg-color=<color> String"
+    echo "       $name_command [Options] -c color -bg color String"
+    echo -e "${bold}${blue}Options:${reset_all}"
+    echo "  -h, --help        Display this help message and exit"
+    echo "  -v, --version     Display version of $name_command and exit"
+    echo "  -c, --color       Specify the color name"
+    echo "  -bg, --bg-color   Specify the background color name"
+    echo "  -n                Do not output the trailing newline"
+    echo "  -b                Make the text bold"
+    echo "  -u                Underline text"
+    echo "  -i                Inverse the forground and the background color"
+    exit 1
+}
+
+# Function to handle settings to print string
+
+function handle_print() { 
+    local fn_color=$1
+    local fn_option_b=$2
+    local fn_option_n=$3
+    local fn_option_u=$4
+    local fn_option_i=$5
+
+    if $fn_option_b && ! $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # b is true
+            echo -e "${bold}${fn_color}${string}${reset_all}"
+
+        elif ! $fn_option_b && ! $fn_option_i && $fn_option_n && ! $fn_option_u; then # n is true
+            echo -e -n "${fn_color}${string}${reset_all}"
+
+        elif ! $fn_option_b && $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # i is true
+            echo -e "${fn_color}${inverse}${string}${reset_all}"
+
+        elif ! $fn_option_b && ! $fn_option_i && ! $fn_option_n && $fn_option_u; then # u is true
+            echo -e "${fn_color}${underline}${string}${reset_all}"
+
+        elif $fn_option_b && ! $fn_option_i && ! $fn_option_n && $fn_option_u; then # b, u are true
+            echo -e "${bold}${fn_color}${underline}${string}${reset_all}"
+
+        elif $fn_option_b && $fn_option_i && ! $fn_option_n && ! $fn_option_u; then # b, i are true
+            echo -e "${bold}${inverse}${fn_color}${string}${reset_all}"
+
+        elif $fn_option_b && ! $fn_option_i && $fn_option_n && ! $fn_option_u; then # b, n are true
+            echo -e -n "${bold}${fn_color}${string}${reset_all}"
+                
+        elif ! $fn_option_b && ! $fn_option_i && $fn_option_n && $fn_option_u; then # n, u are true
+            echo -e -n "${underline}${fn_color}${string}${reset_all}"
+
+        elif ! $fn_option_b && $fn_option_i && $fn_option_n && ! $fn_option_u; then # n, i are true
+            echo -e -n "${inverse}${fn_color}${string}${reset_all}"
+        
+        elif ! $fn_option_b && $fn_option_i && ! $fn_option_n && $fn_option_u; then # i, u are true
+            echo -e "${underline}${inverse}${fn_color}${string}${reset_all}"
+
+        elif $fn_option_b && ! $fn_option_i && $fn_option_n && $fn_option_u; then # b, n, u are true
+            echo -e -n "${bold}${underline}${fn_color}${string}${reset_all}"
+
+        elif ! $fn_option_b && $fn_option_i && $fn_option_n && $fn_option_u; then # n, u, i are true
+            echo -e -n "${underline}${inverse}${fn_color}${string}${reset_all}"
+
+        elif $fn_option_b && $fn_option_i && $fn_option_n && ! $fn_option_u; then # b, n, i are true
+            echo -e -n "${bold}${inverse}${fn_color}${string}${reset_all}"
+
+        elif $fn_option_b && $fn_option_i && ! $fn_option_n && $fn_option_u; then # b, u, i are true
+            echo -e "${bold}${underline}${inverse}${fn_color}${string}${reset_all}"
+        else
+            echo -e "${fn_color}${string}${reset_all}"
+        fi
+}
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -h|--help)
+            display_help
+            ;;
+        -v|--version)
+            echo $version
+            exit 0
+            ;;
+        -c|--color)
+            shift
+            color="$1"
+            ;;
+        --color=*)
+            color="${1#*=}"
+            ;;
+        -bg|--bg-color)
+            shift
+            bg_color="$1"
+            ;;
+        --bg-color=*)
+            bg_color="${1#*=}"
+            ;;
+        -n)
+            option_n=true
+            ;;
+        -b)
+            option_b=true
+            ;;
+        -i)
+            option_i=true
+            ;;
+        -u)
+            option_u=true
+            ;;
+        -bn|-nb)
+            option_b=true 
+            option_n=true
+            ;;
+        -bi|-ib)
+            option_b=true
+            option_i=true
+            ;;
+        -bu|-ub)
+            option_b=true
+            option_u=true
+            ;;
+        -iu|-ui)
+            option_i=true
+            option_u=true
+            ;;
+        -nu|-un)
+            option_n=true
+            option_u=true
+            ;;
+        -in|-ni)
+            option_i=true
+            option_n=true
+            ;;
+        -*)
+            invalid_option="$1"
+            ;;
+        *)
+            string="$1"
+            ;;
+    esac
+    shift
+done
+
+# Check if the color and string are provided
+if [ -z "$color" ] || [ -z "$string" ]; then
+    echo "Error: Both color and string must be provided."
+    echo $help_message
+    exit 2
+fi
+
+# Check if the option is vlaid
+if [[ ! -z $invalid_option ]]; then
+    echo "$name_command: $invalid_option invalid option"
+    echo $help_message
+    exit 3
+fi
+
+
+case $color in 
+    red)
+        handle_print $red $option_b $option_n $option_u $option_i
+        ;;
+    blue) 
+        handle_print $blue $option_b $option_n $option_u $option_i
+        ;;
+    green) 
+        handle_print $green $option_b $option_n $option_u $option_i
+        ;;
+    cyan) 
+        handle_print $cyan $option_b $option_n $option_u $option_i
+        ;;
+    magenta) 
+        handle_print $magenta $option_b $option_n $option_u $option_i
+        ;;
+    yellow) 
+        handle_print $yellow $option_b $option_n $option_u $option_i
+        ;;
+    black) 
+        handle_print $black $option_b $option_n $option_u $option_i
+        ;;
+    white) 
+        handle_print $white $option_b $option_n $option_u $option_i
+        ;;
+    *)
+        echo "Unavailable color"
+        echo $help_message
+        ;;
+esac

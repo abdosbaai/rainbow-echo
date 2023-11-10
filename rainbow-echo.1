@@ -1,0 +1,98 @@
+.TH rainbow-echo 1 "November 2023" "Version 1.0" "User Manuals"
+
+.SH NAME
+rainbow-echo \- Customize the appearance of a given string in the terminal.
+
+.SH SYNOPSIS
+.B rainbow-echo
+[\fIOPTIONS\fR] -c \fIColor-Name\fR \fIString\fR
+.B rainbow-echo
+[\fIOPTIONS\fR] --color=\fIColor\fR \fIString\fR
+.B rainbow-echo
+[\fIOPTIONS\fR] --color=\fIColor\fR --bg-color=\fIBackgroundColor\fR \fIString\fR
+.B rainbow-echo
+[\fIOPTIONS\fR] -c \fIColor\fR -bg \fIBackgroundColor\fR \fIString\fR
+
+.SH DESCRIPTION
+.B rainbow-echo
+is a Bash script that allows users to customize the appearance of a given string by specifying various formatting options such as text color, background color, bold, underline, and inverse text. It supports a variety of color options and formatting styles.
+
+.SH OPTIONS
+.TP
+\fB-h, --help\fR
+Display the help message.
+
+.TP
+\fB-c, --color\fR \fIColor-Name\fR
+Specify the color name.
+
+.TP
+\fB-bg, --bg-color\fR \fIBackgroundColor-Name\fR
+Specify the background color name.
+
+.TP
+\fB-n\fR
+Do not output the trailing newline.
+
+.TP
+\fB-b\fR
+Make the text bold.
+
+.TP
+\fB-u\fR
+Underline text.
+
+.TP
+\fB-i\fR
+Inverse the foreground and the background color.
+
+.SH COLOR OPTIONS
+The following color options are available:
+red, blue, green, cyan, magenta, yellow, black, white.
+
+.SH TEXT STYLES
+The script supports the following text styles:
+bold, underline, inverse (foreground and background colors).
+
+.SH EXAMPLES
+.B rainbow-echo -c red -b "Hello, World!"
+
+.B rainbow-echo -c blue -u -n "This is underlined text"
+
+.B rainbow-echo -c green -bg cyan "Formatted Text"
+
+.SH NOTES
+The script uses ANSI escape codes for text formatting, so ensure your terminal supports these codes. If an unavailable color is provided, an error message will be displayed along with the help message.
+
+.SH AUTHOR
+Abdessadek Sbaai
+
+.SH VERSION
+1.0
+
+.SH LICENSE
+rainbow-echo is distributed under the terms of the MIT License:
+
+Copyright (c) 2023 Abdessadek Sbaai
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+.SH SEE ALSO
+man(1)
+
