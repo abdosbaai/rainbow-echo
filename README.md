@@ -93,7 +93,7 @@ rainbow-echo -c green -bg cyan "Formatted Text"
 
 rainbow-echo is distributed under the terms of the MIT License:
 
-Copyright (c) 2023 Abdessadek Sbaai
+Copyright (c) 2023 Abdessadek
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
